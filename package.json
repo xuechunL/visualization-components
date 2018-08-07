@@ -1,0 +1,19 @@
+{
+  "name": "visualization-components",
+  "version": "1.0.0",
+  "description": "This is a React project about data visualization components in TiDB Admin Dashboard.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "React",
+    "UI Components",
+    "Data Visualization"
+  ],
+  "author": "xuechunlei922@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "react-admin": "^2.2.0"
+  }
+}
