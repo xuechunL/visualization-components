@@ -1,18 +1,24 @@
 # visualization-components
 
-This is a React project about data visualization components in TiDB Admin Dashboard.
+This is a repository about data visualization components.
 
-## Development
+## TiDB Admin
 
-### Install the dependencies
-node v8+, npm
+TiDB-Admin uses React. We’ll use Facebook’s create-react-app to create an empty React app, and install the react-admin package:
 
-`npm install`
 
-### run start
+### Setting Up
 
-`npm start`
+```
+npm install -g create-react-app
+create-react-app test-admin
+cd test-admin/
+yarn add react-admin prop-types
+yarn start
+```
 
-### run build
+You should be up and running with an empty React application on port 3000.
 
-`npm run build`
+### Using an API As Data Source
+
+TiDB-Admin runs in the browser, and uses REST APIs for fetching and storing data.
