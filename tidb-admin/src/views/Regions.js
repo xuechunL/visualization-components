@@ -1,6 +1,6 @@
 // in src/regions.js
 import React from 'react'
-import { List, Datagrid, TextField, ArrayField } from 'react-admin'
+import { List, Datagrid, TextField, ArrayField } from 'react-admin/lib'
 
 export const RegionList = props => (
   <List title="All Regions" {...props} perPage={10}>

@@ -2,13 +2,12 @@
 
 import React from 'react'
 // eslint-disable-next-line
-import { Admin, Resource } from 'react-admin';
+import { Admin, Resource } from 'react-admin/lib';
 
 // write our own Data Provider.
-import restProvider from './restProvider'
+import { restProvider } from './services'
 
-import Overview from './overview'
-import { RegionList } from './regions'
+import { Overview, RegionList } from './views'
 
 const App = () => (
   <Admin title="TiDB Admin" dashboard={Overview} dataProvider={restProvider}>
