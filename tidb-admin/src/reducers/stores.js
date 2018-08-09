@@ -4,7 +4,7 @@ import { STORES, STORE } from '../actions'
 export default function stores(
   state = {
     isFetching: false,
-    stores: [],
+    list: [],
     store: null,
   },
   action
@@ -16,7 +16,7 @@ export default function stores(
       return {
         ...state,
         isFetching: false,
-        stores: action.payload.response.stores,
+        list: action.payload.response.stores,
       }
     case STORE.REQUEST:
       return { ...state, isFetching: true }

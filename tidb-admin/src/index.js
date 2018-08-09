@@ -6,12 +6,9 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './containers/App'
 import registerServiceWorker from './registerServiceWorker'
-
 import configureStore from './store/configureStore'
-import rootSaga from './sagas'
 
-const store = configureStore()
-store.runSaga(rootSaga)
+const store = configureStore({})
 
 ReactDOM.render(
   <Provider store={store}>

@@ -7,9 +7,9 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { ViewTitle } from 'react-admin/lib'
 
-import { stores, store, cluster } from '../actions'
-
-const ClusterStatus = () => <div>Status</div>
+const ClusterStatus = () => {
+  return <div>Status</div>
+}
 
 class Overview extends React.Component {
   constructor(props) {
@@ -20,14 +20,13 @@ class Overview extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
-    console.log('cluster fetch action', cluster.fetch())
-    dispatch(cluster.fetch())
-    dispatch(stores.fetch())
-    dispatch(store.fetch())
+    dispatch({ type: 'FETCH_CLUSTER_STATUS' })
+    dispatch({ type: 'FETCH_STORES' })
+    // dispatch({ type: 'FETCH_STORE', payload: { id: 1 } })
   }
 
   render() {
-    console.log('store', this.props)
+    console.log('global state in overview container', this.props)
     return (
       <div>
         <Card>
@@ -47,24 +46,19 @@ class Overview extends React.Component {
 }
 
 Overview.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
-  stores: PropTypes.array.isRequired,
+  stores: PropTypes.object,
   store: PropTypes.object,
   cluster: PropTypes.object,
 }
 
 function mapStateToProps(state) {
   const {
-    isFetching = false,
-    store = null,
-    stores = [],
-    cluster = null,
+    pdServers: { stores, store, cluster },
   } = state
 
   return {
     stores,
-    isFetching,
     store,
     cluster,
   }
