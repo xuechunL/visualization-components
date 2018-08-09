@@ -1,3 +1,4 @@
+// in src/containers/App.test.js
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'

@@ -1,4 +1,4 @@
-// in src/regions.js
+// in src/containers/Regions.js
 import React from 'react'
 import { List, Datagrid, TextField, ArrayField } from 'react-admin/lib'
 

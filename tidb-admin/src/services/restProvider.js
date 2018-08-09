@@ -1,4 +1,4 @@
-// in restProvider.js
+// in src/services/resProvider.js
 import {
   GET_LIST,
   GET_ONE,

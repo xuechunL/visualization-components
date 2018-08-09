@@ -1,3 +1,4 @@
+// in src/services/endpoint.js
 import axios from 'axios'
 
 axios.defaults.timeout = 10000
