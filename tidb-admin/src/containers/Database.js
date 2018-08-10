@@ -1,4 +1,4 @@
-// in src/containers/Overview.js
+// in src/containers/Database.js
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -7,7 +7,6 @@ import _ from 'lodash'
 
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-// import Button from '@material-ui/core/Button'
 import { ViewTitle } from 'react-admin/lib'
 
 import { theme } from '../actions'
@@ -18,7 +17,7 @@ const ClusterSummary = ({ cluster }) => {
   return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
 }
 
-class Overview extends React.Component {
+class Database extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -46,7 +45,7 @@ class Overview extends React.Component {
     return (
       <div>
         <Card>
-          <ViewTitle title="TiDB Dashboard" />
+          <ViewTitle title="Database" />
 
           <CardContent>
             Admin Theme: {_.upperCase(theme)}
@@ -58,13 +57,6 @@ class Overview extends React.Component {
           <ViewTitle title="Cluster Status" />
           <CardContent>
             <ClusterSummary cluster={cluster} />
-            {/* <Button
-              variant="outlined"
-              color="primary"
-              onClick={this.handleChangeTheme}
-            >
-              DarK
-            </Button> */}
           </CardContent>
         </Card>
       </div>
@@ -72,7 +64,7 @@ class Overview extends React.Component {
   }
 }
 
-Overview.propTypes = {
+Database.propTypes = {
   dispatch: PropTypes.func.isRequired,
   stores: PropTypes.object,
   store: PropTypes.object,
@@ -94,4 +86,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Overview)
+export default connect(mapStateToProps)(Database)

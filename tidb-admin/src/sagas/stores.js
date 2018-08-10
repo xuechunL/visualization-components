@@ -8,9 +8,9 @@ import { stores, store } from '../actions'
 // fetch store list
 export function* fetchStores() {
   yield put(stores.request())
-  const { data, message } = yield call(API, { url: '/stores' })
-  if (data) yield put(stores.success(data))
-  else yield put(stores.failure(message || 'REQUEST FAILURE'))
+  const data = yield call(API, { url: '/stores' })
+  if (data) yield put(stores.success(data.stores))
+  else yield put(stores.failure(data.message || 'REQUEST FAILURE'))
 }
 
 // fetch a specific store

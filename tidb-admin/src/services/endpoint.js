@@ -33,7 +33,12 @@ export default function API(opt) {
   return axios(nOpt)
     .then(function(response) {
       // success
-      return response.data
+      console.log('http response', response)
+      // TODO: abstract status code handler
+      const { status, data, error } = response
+      if (status === 200 || status === 201 || status === 202 || status === 204)
+        return data
+      else console.log(error)
     })
     .catch(error => {
       // Error

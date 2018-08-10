@@ -1,4 +1,4 @@
-// in src/containers/Overview.js
+// in src/containers/Storage.js
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -18,7 +18,7 @@ const ClusterSummary = ({ cluster }) => {
   return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
 }
 
-class Overview extends React.Component {
+class Storage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -46,7 +46,7 @@ class Overview extends React.Component {
     return (
       <div>
         <Card>
-          <ViewTitle title="TiDB Dashboard" />
+          <ViewTitle title="Storage" />
 
           <CardContent>
             Admin Theme: {_.upperCase(theme)}
@@ -58,13 +58,6 @@ class Overview extends React.Component {
           <ViewTitle title="Cluster Status" />
           <CardContent>
             <ClusterSummary cluster={cluster} />
-            {/* <Button
-              variant="outlined"
-              color="primary"
-              onClick={this.handleChangeTheme}
-            >
-              DarK
-            </Button> */}
           </CardContent>
         </Card>
       </div>
@@ -72,7 +65,7 @@ class Overview extends React.Component {
   }
 }
 
-Overview.propTypes = {
+Storage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   stores: PropTypes.object,
   store: PropTypes.object,
@@ -94,4 +87,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Overview)
+export default connect(mapStateToProps)(Storage)
