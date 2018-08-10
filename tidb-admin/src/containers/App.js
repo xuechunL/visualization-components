@@ -5,6 +5,8 @@ import React from 'react'
 // eslint-disable-next-line
 import { Admin, Resource } from 'react-admin/lib';
 import { createMuiTheme } from '@material-ui/core/styles'
+import indigo from '@material-ui/core/colors/blue'
+import blue from '@material-ui/core/colors/blue'
 
 // write our own Data Provider.
 import { restProvider } from '../services'
@@ -20,7 +22,9 @@ import { RegionList } from '../resources/Regions'
 
 const theme = createMuiTheme({
   palette: {
-    type: 'light', // Switching the dark mode on is a single property value change.
+    // type: 'light', // Switching the dark mode on is a single property value change.
+    primary: indigo,
+    secondary: blue,
   },
 })
 
