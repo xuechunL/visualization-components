@@ -5,11 +5,12 @@ import React from 'react'
 // eslint-disable-next-line
 import { Admin, Resource } from 'react-admin/lib';
 import { createMuiTheme } from '@material-ui/core/styles'
-import indigo from '@material-ui/core/colors/blue'
+import indigo from '@material-ui/core/colors/indigo'
 import blue from '@material-ui/core/colors/blue'
 
 // write our own Data Provider.
 import { restProvider } from '../services'
+import i18nProvider from '../i18nProvider'
 import rootSaga from '../sagas'
 import rootReducer from '../reducers'
 import uiReducer from '../reducers/ui'
@@ -39,6 +40,7 @@ const App = () => (
     customSagas={[rootSaga]}
     dashboard={Overview}
     dataProvider={restProvider}
+    i18nProvider={i18nProvider}
   >
     <Resource name="regions" list={RegionList} />
   </Admin>

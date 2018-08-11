@@ -40,9 +40,7 @@ const Menu = ({ onMenuClick, translate, logout }) => (
       <MenuItemLink
         key={item.path}
         to={`/${item.path}`}
-        primaryText={translate(`${item.name}`, {
-          smart_count: 2,
-        })}
+        primaryText={translate(`${item.path}.name`)}
         leftIcon={item.icon}
         onClick={onMenuClick}
       />
