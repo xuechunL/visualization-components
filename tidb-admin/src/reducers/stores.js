@@ -16,7 +16,7 @@ export default function stores(
       return {
         ...state,
         isFetching: false,
-        list: action.payload.response.stores,
+        list: action.payload.response,
       }
     case STORE.REQUEST:
       return { ...state, isFetching: true }

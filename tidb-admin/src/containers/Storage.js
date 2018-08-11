@@ -3,63 +3,75 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import _ from 'lodash'
-
+import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import GridList from '@material-ui/core/GridList'
 // import Button from '@material-ui/core/Button'
 import { ViewTitle } from 'react-admin/lib'
+import Button from '@material-ui/core/Button'
 
-import { theme } from '../actions'
-
-const ClusterSummary = ({ cluster }) => {
-  // TODO: loading
-  if (_.isNull(cluster.status)) return null
-  return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
+const styles = {
+  summary: {
+    marginBottom: '20px',
+  },
+  gridList: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: '20px',
+  },
+  card: {
+    maxWidth: 320,
+    margin: 10,
+  },
+  link: {
+    float: 'right',
+  },
 }
 
 class Storage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    this.handleChangeTheme = this.handleChangeTheme.bind(this)
   }
 
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch({ type: 'FETCH_CLUSTER_STATUS' })
     dispatch({ type: 'FETCH_STORES' })
     dispatch({ type: 'FETCH_STORE', payload: { id: 1 } })
   }
 
-  handleChangeTheme() {
-    const { dispatch } = this.props
-    dispatch(theme.change('dark'))
-  }
-
   render() {
-    const { cluster, theme } = this.props
+    const { stores, classes } = this.props
 
-    console.log('cluster', cluster)
+    console.log('stores', stores)
     return (
-      <div>
-        <Card>
+      <div className={classes.root}>
+        <Card className={classes.summary}>
           <ViewTitle title="Storage" />
-
-          <CardContent>
-            Admin Theme: {_.upperCase(theme)}
-            <br /> Lorem ipsum sic dolor amet...
-          </CardContent>
+          <CardContent>TiKV Store List...</CardContent>
         </Card>
-
-        <Card>
-          <ViewTitle title="Cluster Status" />
-          <CardContent>
-            <ClusterSummary cluster={cluster} />
-          </CardContent>
-        </Card>
+        <GridList cellHeight={240} className={classes.gridList} cols={3}>
+          {stores.map(item => (
+            <Card key={item.store.id} className={classes.card}>
+              <ViewTitle title={`Store: ${item.store.id}`} />
+              <CardContent>
+                <p>Address: {item.store.address} </p>
+                <p>Version: {item.store.version}</p>
+                <p>State: {item.store.state_name}</p>
+                <Button
+                  href="#text-buttons"
+                  className={classes.link}
+                  color="primary"
+                >
+                  Status Details
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </GridList>
       </div>
     )
   }
@@ -67,7 +79,7 @@ class Storage extends React.Component {
 
 Storage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  stores: PropTypes.object,
+  stores: PropTypes.array,
   store: PropTypes.object,
   cluster: PropTypes.object,
   theme: PropTypes.string,
@@ -75,16 +87,13 @@ Storage.propTypes = {
 
 function mapStateToProps(state) {
   const {
-    pdServers: { stores, store, cluster },
-    globalUI: { theme },
+    pdServers: { stores, store },
   } = state
 
   return {
-    stores,
+    stores: stores.list,
     store,
-    cluster,
-    theme,
   }
 }
 
-export default connect(mapStateToProps)(Storage)
+export default connect(mapStateToProps)(withStyles(styles)(Storage))

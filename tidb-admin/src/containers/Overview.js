@@ -49,8 +49,8 @@ class Overview extends React.Component {
           <ViewTitle title="TiDB Dashboard" />
 
           <CardContent>
-            Admin Theme: {_.upperCase(theme)}
-            <br /> Lorem ipsum sic dolor amet...
+            <p>Admin Theme: {_.upperCase(theme)}</p>
+            <p>Lorem ipsum sic dolor amet...</p>
           </CardContent>
         </Card>
 
