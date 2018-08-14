@@ -8,7 +8,6 @@ export function* fetchClusterStatus() {
   yield put(cluster.request())
   // const { data, message } = yield call(API, { url: '/cluster/status' })
   const data = yield call(API, { url: '/cluster/status' })
-  console.log('/cluster/status - response data: ', data)
   if (data) yield put(cluster.success(data))
   else yield put(cluster.failure(data.message || 'REQUEST FAILURE'))
 }

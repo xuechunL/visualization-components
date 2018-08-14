@@ -44,60 +44,34 @@ export const REGION = createRequestTypes('REGION')
 export const LABELS = createRequestTypes('LABELS')
 export const LABELS_STORES = createRequestTypes('LABELS_STORES')
 
-/******************
- * action creator *
- ******************/
+/*****************************
+ * export actions in a model *
+ *****************************/
+
+//action creator
 function action(type, payload = {}) {
   return { type, payload }
 }
 
-/******************
- * export actions *
- ******************/
+// request action model
+const requestActionModel = type => {
+  return {
+    request: () => action(type[REQUEST]),
+    success: response => action(type[SUCCESS], { response }),
+    failure: error => action(type[FAILURE], { error }),
+  }
+}
+
+// export action models
+export const cluster = requestActionModel(CLUSTER)
+export const labels = requestActionModel(LABELS)
+export const labelsStores = requestActionModel(LABELS_STORES)
+export const stores = requestActionModel(STORES)
+export const store = requestActionModel(STORE)
+export const regions = requestActionModel(REGIONS)
+export const region = requestActionModel(REGION)
 
 // change theme actions
 export const theme = {
   change: theme => action(THEME[CHANGE], { theme }),
-}
-
-// request actions
-export const cluster = {
-  request: () => action(CLUSTER[REQUEST]),
-  success: response => action(CLUSTER[SUCCESS], { response }),
-  failure: error => action(CLUSTER[FAILURE], { error }),
-}
-export const stores = {
-  request: () => action(STORES[REQUEST]),
-  success: response => action(STORES[SUCCESS], { response }),
-  failure: error => action(STORES[FAILURE], { error }),
-}
-
-export const store = {
-  request: id => action(STORE[REQUEST], { id }),
-  success: response => action(STORE[SUCCESS], { response }),
-  failure: error => action(STORE[FAILURE], { error }),
-}
-
-export const regions = {
-  request: () => action(REGIONS[REQUEST]),
-  success: response => action(REGIONS[SUCCESS], { response }),
-  failure: error => action(REGIONS[FAILURE], { error }),
-}
-
-export const region = {
-  request: key => action(REGION[REQUEST], { key }),
-  success: response => action(REGION[SUCCESS], { response }),
-  failure: error => action(REGION[FAILURE], { error }),
-}
-
-export const labels = {
-  request: () => action(REGIONS[REQUEST]),
-  success: response => action(REGIONS[SUCCESS], { response }),
-  failure: error => action(REGIONS[FAILURE], { error }),
-}
-
-export const labelsStores = {
-  request: () => action(REGION[REQUEST]),
-  success: response => action(REGION[SUCCESS], { response }),
-  failure: error => action(REGION[FAILURE], { error }),
 }
