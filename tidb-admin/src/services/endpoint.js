@@ -17,7 +17,10 @@ axios.interceptors.response.use(
   }
 )
 
-const PD_ENDPOINT_HOST = 'http://localhost:32379' // pd endpoint port
+// export environment variables with create-react-app
+// https://serverless-stack.com/chapters/environments-in-create-react-app.html
+const PD_ENDPOINT_HOST = `http://localhost:${process.env.REACT_APP_PD_PORT ||
+  9000}` // pd endpoint port
 const PD_ENDPOINT_PATH = '/pd/api/v1'
 const URL_PREFIX = PD_ENDPOINT_HOST + PD_ENDPOINT_PATH
 

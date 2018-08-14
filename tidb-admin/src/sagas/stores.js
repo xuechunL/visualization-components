@@ -16,11 +16,12 @@ export function* fetchStores() {
 // fetch a specific store
 export function* fetchStore(action) {
   yield put(store.request())
-  const { data, message } = yield call(API, {
+  const data = yield call(API, {
     url: `/store/${action.payload.id}`,
   })
+  console.log('store', data)
   if (data) yield put(store.success(data))
-  else yield put(store.failure(message || 'REQUEST FAILURE'))
+  else yield put(store.failure(data.message || 'REQUEST FAILURE'))
 }
 
 // The watcher: watch actions and coordinate worker tasks

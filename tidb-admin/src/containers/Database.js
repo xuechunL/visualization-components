@@ -5,11 +5,22 @@ import { connect } from 'react-redux'
 
 import _ from 'lodash'
 
+import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { ViewTitle } from 'react-admin/lib'
 
 import { theme } from '../actions'
+
+const styles = {
+  summary: {
+    marginBottom: '30px',
+  },
+  card: {
+    maxWidth: 320,
+    margin: 10,
+  },
+}
 
 const ClusterSummary = ({ cluster }) => {
   // TODO: loading
@@ -29,8 +40,6 @@ class Database extends React.Component {
     const { dispatch } = this.props
 
     dispatch({ type: 'FETCH_CLUSTER_STATUS' })
-    dispatch({ type: 'FETCH_STORES' })
-    dispatch({ type: 'FETCH_STORE', payload: { id: 1 } })
   }
 
   handleChangeTheme() {
@@ -39,14 +48,12 @@ class Database extends React.Component {
   }
 
   render() {
-    const { cluster, theme } = this.props
+    const { cluster, theme, classes } = this.props
 
-    console.log('cluster', cluster)
     return (
-      <div>
-        <Card>
+      <div className={classes.root}>
+        <Card className={classes.summary}>
           <ViewTitle title="Database" />
-
           <CardContent>
             Admin Theme: {_.upperCase(theme)}
             <br /> Lorem ipsum sic dolor amet...
@@ -66,24 +73,20 @@ class Database extends React.Component {
 
 Database.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  stores: PropTypes.object,
-  store: PropTypes.object,
   cluster: PropTypes.object,
   theme: PropTypes.string,
 }
 
 function mapStateToProps(state) {
   const {
-    pdServers: { stores, store, cluster },
+    pdServers: { cluster },
     globalUI: { theme },
   } = state
 
   return {
-    stores,
-    store,
     cluster,
     theme,
   }
 }
 
-export default connect(mapStateToProps)(Database)
+export default connect(mapStateToProps)(withStyles(styles)(Database))

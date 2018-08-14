@@ -58,7 +58,7 @@ export const stores = {
 
 export const store = {
   request: id => action(STORE[REQUEST], { id }),
-  success: (id, response) => action(STORE[SUCCESS], { id, response }),
+  success: response => action(STORE[SUCCESS], { response }),
   failure: (id, error) => action(STORE[FAILURE], { id, error }),
 }
 

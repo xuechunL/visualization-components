@@ -14,7 +14,8 @@ import {
 import { stringify } from 'query-string'
 import _ from 'lodash'
 
-const PD_ENDPOINT_HOST = 'http://localhost:32379' // pd endpoint port
+const PD_ENDPOINT_HOST = `http://localhost:${process.env.REACT_APP_PD_PORT ||
+  9000}` // pd endpoint port
 const PD_ENDPOINT_PATH = '/pd/api/v1/'
 
 const apiUrl = PD_ENDPOINT_HOST + PD_ENDPOINT_PATH

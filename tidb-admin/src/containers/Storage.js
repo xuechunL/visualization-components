@@ -3,23 +3,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import _ from 'lodash'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import GridList from '@material-ui/core/GridList'
-// import Button from '@material-ui/core/Button'
 import { ViewTitle } from 'react-admin/lib'
 import Button from '@material-ui/core/Button'
 
 const styles = {
   summary: {
-    marginBottom: '20px',
+    marginBottom: '30px',
   },
   gridList: {
     width: '100%',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '20px',
+    transform: 'translateX(-10px)',
   },
   card: {
     maxWidth: 320,
@@ -40,7 +40,6 @@ class Storage extends React.Component {
     const { dispatch } = this.props
 
     dispatch({ type: 'FETCH_STORES' })
-    dispatch({ type: 'FETCH_STORE', payload: { id: 1 } })
   }
 
   render() {
@@ -53,16 +52,20 @@ class Storage extends React.Component {
           <ViewTitle title="Storage" />
           <CardContent>TiKV Store List...</CardContent>
         </Card>
-        <GridList cellHeight={240} className={classes.gridList} cols={3}>
-          {stores.map(item => (
+        <GridList cellHeight={260} className={classes.gridList} cols={3}>
+          {_.map(stores, item => (
             <Card key={item.store.id} className={classes.card}>
               <ViewTitle title={`Store: ${item.store.id}`} />
               <CardContent>
-                <p>Address: {item.store.address} </p>
-                <p>Version: {item.store.version}</p>
-                <p>State: {item.store.state_name}</p>
+                {_.map(item.store, (value, key) => {
+                  return (
+                    <p key={`${key}-${value}`}>
+                      {_.startCase(key)}: {value}
+                    </p>
+                  )
+                })}
                 <Button
-                  href="#text-buttons"
+                  href={`#store/${item.store.id}`}
                   className={classes.link}
                   color="primary"
                 >
@@ -80,19 +83,16 @@ class Storage extends React.Component {
 Storage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   stores: PropTypes.array,
-  store: PropTypes.object,
-  cluster: PropTypes.object,
   theme: PropTypes.string,
 }
 
 function mapStateToProps(state) {
   const {
-    pdServers: { stores, store },
+    pdServers: { stores },
   } = state
 
   return {
     stores: stores.list,
-    store,
   }
 }
 
