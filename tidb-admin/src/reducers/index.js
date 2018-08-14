@@ -1,12 +1,16 @@
 // in src/reducers/index.js
 import { combineReducers } from 'redux'
 
-import stores from './stores'
+import labels from './labels'
 import cluster from './cluster'
+import stores from './stores'
+import regions from './regions'
 
 const rootReducer = combineReducers({
-  stores,
+  labels,
   cluster,
+  stores,
+  regions,
 })
 
 export default rootReducer

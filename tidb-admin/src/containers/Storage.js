@@ -39,13 +39,16 @@ class Storage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
+    dispatch({ type: 'FETCH_LABELS' })
+    dispatch({ type: 'FETCH_LABELS_STORES' })
     dispatch({ type: 'FETCH_STORES' })
+    dispatch({ type: 'FETCH_REGIONS' })
+    dispatch({ type: 'FETCH_REGION_BY_ID', payload: { id: 2 } })
   }
 
   render() {
     const { stores, classes } = this.props
 
-    console.log('stores', stores)
     return (
       <div className={classes.root}>
         <Card className={classes.summary}>
