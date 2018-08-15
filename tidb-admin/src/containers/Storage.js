@@ -3,14 +3,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import classNames from 'classnames'
-
+// import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { ViewTitle } from 'react-admin/lib'
+import Typography from '@material-ui/core/Typography'
 
-import { RegionList, StoreList } from '../components/storage'
+import { RegionList, StoreList, RegionsChartList } from '../components/storage'
 
 const styles = {
   summary: {
@@ -18,11 +17,9 @@ const styles = {
   },
   gridList: {
     width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
     transform: 'translateX(-10px)',
   },
-  subheader: {
+  subHeader: {
     paddingLeft: '10px',
     fontSize: '1.2em',
   },
@@ -33,7 +30,8 @@ const styles = {
   },
   chartCard: {
     maxWidth: '100%',
-    transform: 'translate(-10px, 40px)',
+    margin: '20px 0', 
+    // transform: 'translate(-12px, 40px)',
   },
   link: {
     float: 'right',
@@ -41,6 +39,9 @@ const styles = {
   row: {
     display: 'flex',
     alignItems: 'center',
+  },
+  cardTitle: {
+    padding: '16px 24px',
   },
 }
 
@@ -57,26 +58,28 @@ class Storage extends React.Component {
     dispatch({ type: 'FETCH_LABELS_STORES' })
     dispatch({ type: 'FETCH_STORES' })
     dispatch({ type: 'FETCH_REGIONS' })
-    // dispatch({ type: 'FETCH_REGION_BY_ID', payload: { id: 2 } })
   }
 
   render() {
     const { stores, regions, classes } = this.props
 
+    const titleCls = {
+      variant: 'headline',
+      component: 'h2',
+      className: classes.cardTitle,
+    }
+
     return (
       <div className={classes.root}>
         <Card className={classes.summary}>
-          <ViewTitle title="Storage" />
+          <Typography {...titleCls}>Storage</Typography>
           <CardContent>Storage Overview...</CardContent>
         </Card>
 
+        <RegionsChartList regions={regions} classes={classes} />
+
         <StoreList stores={stores} classes={classes} />
         <RegionList regions={regions} classes={classes} />
-
-        <Card className={classNames(classes.card, classes.chartCard)}>
-          <ViewTitle title="Regions With The Highest Write Flow." />
-          <CardContent>Write Flow ScanKey Diagram...</CardContent>
-        </Card>
       </div>
     )
   }

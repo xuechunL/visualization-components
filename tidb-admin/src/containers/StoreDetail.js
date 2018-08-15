@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { ViewTitle } from 'react-admin/lib'
+import Typography from '@material-ui/core/Typography'
 
 const styles = {
   root: {
@@ -22,13 +22,16 @@ const styles = {
   summary: {},
   status: {},
   metrics: {},
+  cardTitle: {
+    padding: '16px 24px',
+  },
 }
 
 class StoreDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: window.location.href.slice(-1),
+      id: _.last(window.location.href.split('/')),
     }
   }
 
@@ -49,12 +52,18 @@ class StoreDetail extends React.Component {
 
     const cls = spc => classNames(classes.card, ...spc)
 
+    const titleCls = {
+      variant: 'headline',
+      component: 'h2',
+      className: classes.cardTitle,
+    }
+
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={6} sm={6}>
             <Card className={cls([classes.summary])}>
-              <ViewTitle title={`Store: ${store.id}`} />
+              <Typography {...titleCls}>{`Store: ${store.id}`}</Typography>
               <CardContent>
                 {_.map(store, (value, key) => {
                   return (
@@ -68,7 +77,7 @@ class StoreDetail extends React.Component {
           </Grid>
           <Grid item xs={6} sm={6}>
             <Card className={cls([classes.status])}>
-              <ViewTitle title="Store Status" />
+              <Typography {...titleCls}>Store Status</Typography>
               <CardContent>
                 {_.map(status, (value, key) => {
                   return (

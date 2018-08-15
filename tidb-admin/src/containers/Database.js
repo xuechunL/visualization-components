@@ -8,7 +8,7 @@ import _ from 'lodash'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { ViewTitle } from 'react-admin/lib'
+import Typography from '@material-ui/core/Typography'
 
 import { theme } from '../actions'
 
@@ -19,6 +19,9 @@ const styles = {
   card: {
     maxWidth: 320,
     margin: 10,
+  },
+  cardTitle: {
+    padding: '16px 24px',
   },
 }
 
@@ -50,18 +53,24 @@ class Database extends React.Component {
   render() {
     const { cluster, theme, classes } = this.props
 
+    const titleCls = {
+      variant: 'headline',
+      component: 'h2',
+      className: classes.cardTitle,
+    }
+
     return (
       <div className={classes.root}>
         <Card className={classes.summary}>
-          <ViewTitle title="Database" />
+          <Typography {...titleCls}>Database Overview</Typography>
           <CardContent>
-            Admin Theme: {_.upperCase(theme)}
-            <br /> Lorem ipsum sic dolor amet...
+            <p>Admin Theme: {_.upperCase(theme)}</p>
+            <p>Lorem ipsum sic dolor amet...</p>
           </CardContent>
         </Card>
 
         <Card>
-          <ViewTitle title="Cluster Status" />
+          <Typography {...titleCls}>Cluster Map</Typography>
           <CardContent>
             <ClusterSummary cluster={cluster} />
           </CardContent>
