@@ -19,10 +19,9 @@ axios.interceptors.response.use(
 
 // export environment variables with create-react-app
 // https://serverless-stack.com/chapters/environments-in-create-react-app.html
-const PD_ENDPOINT_HOST = `http://localhost:${process.env.REACT_APP_PD_PORT ||
-  9000}` // pd endpoint port
-const PD_ENDPOINT_PATH = '/pd/api/v1'
-const URL_PREFIX = PD_ENDPOINT_HOST + PD_ENDPOINT_PATH
+const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SEVER || ''}` // pd endpoint host
+const PD_API_PREFIX = '/pd/api/v1'
+const URL_PREFIX = PD_ENDPOINT_HOST + PD_API_PREFIX
 
 // FIXME: CORS https://github.com/axios/axios/issues/853
 // CORS Chrome extensions: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
@@ -31,7 +30,9 @@ export default function API(opt) {
   console.log('API is called with ', opt)
   let { url } = opt
   url = URL_PREFIX + url
-  const nOpt = Object.assign({}, opt, { url })
+  const nOpt = Object.assign({}, opt, {
+    url,
+  })
 
   return axios(nOpt)
     .then(function(response) {
