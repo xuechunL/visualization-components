@@ -13,10 +13,17 @@ import {
 
 import { stringify } from 'query-string'
 import _ from 'lodash'
+// import { store } from '../actions'
 
 const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SEVER || ''}` // pd endpoint host
 const PD_API_PREFIX = '/pd/api/v1'
 const apiUrl = PD_ENDPOINT_HOST + PD_API_PREFIX
+
+const format2RestfulList = data => {
+  const list = _.map(data, item => _.assign({}, item.store, item.status))
+  console.log('store restful list', list)
+  return { data: list, total: list.length }
+}
 
 /**
  * Maps react-admin queries to my REST API
@@ -121,6 +128,10 @@ export default (type, resource, params) => {
         case GET_LIST: {
           const data = response[resource]
           console.log('data', data)
+
+          // format stores data to standard Restful APi
+          if (resource === 'stores') return format2RestfulList(data)
+
           return _.assign({}, { data, total: response.count })
         }
         default: {

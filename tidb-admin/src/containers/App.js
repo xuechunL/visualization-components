@@ -19,7 +19,7 @@ import AppLayout from '../Layout'
 import { Overview } from '../containers'
 import routes from '../customerRoutes'
 
-import { RegionList } from '../resources/Regions'
+import { StoreList } from '../resources'
 
 const theme = createMuiTheme({
   palette: {
@@ -41,7 +41,7 @@ const App = () => (
     dashboard={Overview}
     dataProvider={restProvider}
     i18nProvider={i18nProvider}>
-    <Resource name="regions" list={RegionList} />
+    <Resource name="stores" list={StoreList} />
   </Admin>
 )
 

@@ -62,7 +62,7 @@ class Overview extends React.Component {
     return (
       <div className={classes.root}>
         <Card className={classes.summary}>
-          <Typography {...titleCls}>TiDB Dashboard</Typography>
+          <Typography {...titleCls}>Overview</Typography>
           <CardContent>
             <p>Admin Theme: {_.upperCase(theme)}</p>
             <p>Lorem ipsum sic dolor amet...</p>

@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import compose from 'recompose/compose'
 import StorageIcon from '@material-ui/icons/Storage'
 import DeviceHubIcon from '@material-ui/icons/DeviceHub'
-import EventNoteIcon from '@material-ui/icons/EventNote'
-import ListIcon from '@material-ui/icons/List'
+// import EventNoteIcon from '@material-ui/icons/EventNote'
+// import ListIcon from '@material-ui/icons/List'
 
 import {
   translate,
@@ -20,8 +20,8 @@ import { withRouter } from 'react-router-dom'
 const items = [
   { path: 'clustermap', name: 'Cluster Map', icon: <DeviceHubIcon /> },
   { path: 'storage', name: 'Storage', icon: <StorageIcon /> },
-  { path: 'database', name: 'Database', icon: <ListIcon /> },
-  { path: 'diagnose', name: 'Diagnose', icon: <EventNoteIcon /> },
+  // { path: 'database', name: 'Database', icon: <ListIcon /> },
+  // { path: 'diagnose', name: 'Diagnose', icon: <EventNoteIcon /> },
 ]
 
 const styles = {
