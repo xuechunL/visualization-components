@@ -9,7 +9,7 @@ import { regions, region } from '../actions'
 export function* fetchRegions() {
   yield put(regions.request())
   const data = yield call(API, {
-    url: '/regions',
+    path: '/regions',
   })
   if (data) yield put(regions.success(data.regions))
   else yield put(regions.failure(data.message || 'REQUEST FAILURE'))
@@ -19,7 +19,7 @@ export function* fetchRegions() {
 export function* fetchRegionById(action) {
   yield put(region.request())
   const data = yield call(API, {
-    url: `/region/id/${action.payload.id}`,
+    path: `/region/id/${action.payload.id}`,
   })
   console.log('region', data)
   if (data) yield put(region.success(data))
@@ -30,7 +30,7 @@ export function* fetchRegionById(action) {
 export function* fetchRegionByKey(action) {
   yield put(region.request())
   const data = yield call(API, {
-    url: `/region/key/${action.payload.key}`,
+    path: `/region/key/${action.payload.key}`,
   })
   console.log('region', data)
   if (data) yield put(region.success(data))

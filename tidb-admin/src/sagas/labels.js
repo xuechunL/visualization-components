@@ -9,7 +9,7 @@ import { labels, labelsStores } from '../actions'
 export function* fetchLabels() {
   yield put(labels.request())
   const data = yield call(API, {
-    url: '/labels',
+    path: '/labels',
   })
   yield put(labels.success(data))
   // else yield put(labels.failure(data.message || 'REQUEST FAILURE'))
@@ -19,7 +19,7 @@ export function* fetchLabels() {
 export function* fetchLabelsStores() {
   yield put(labelsStores.request())
   const data = yield call(API, {
-    url: `/labels/stores`,
+    path: `/labels/stores`,
   })
   yield put(labelsStores.success(data))
   // else yield put(labelsStores.failure(data.message || 'REQUEST FAILURE'))

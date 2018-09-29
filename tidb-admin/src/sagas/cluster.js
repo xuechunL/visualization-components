@@ -6,9 +6,9 @@ import { cluster } from '../actions'
 // fetch cluster status
 export function* fetchClusterStatus() {
   yield put(cluster.request())
-  // const { data, message } = yield call(API, { url: '/cluster/status' })
+  // const { data, message } = yield call(API, { path: '/cluster/status' })
   const data = yield call(API, {
-    url: '/cluster/status',
+    path: '/cluster/status',
   })
   if (data) yield put(cluster.success(data))
   else yield put(cluster.failure(data.message || 'REQUEST FAILURE'))

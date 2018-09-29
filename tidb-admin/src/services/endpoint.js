@@ -21,17 +21,28 @@ axios.interceptors.response.use(
 // https://serverless-stack.com/chapters/environments-in-create-react-app.html
 const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SEVER || ''}` // pd endpoint host
 const PD_API_PREFIX = '/pd/api/v1'
-const URL_PREFIX = PD_ENDPOINT_HOST + PD_API_PREFIX
+
+// https://prometheus.io/docs/prometheus/latest/querying/api/
+const PROMETHEUS_ENDPOINT_HOST = `${process.env.REACT_APP_PROMETHEUS_SEVER ||
+  ''}` // pd endpoint host
+const PROMETHEUS_API_PREFIX = '/api/v1'
 
 // FIXME: CORS https://github.com/axios/axios/issues/853
 // CORS Chrome extensions: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
 
 export default function API(opt) {
   console.log('API is called with ', opt)
-  let { url } = opt
-  url = URL_PREFIX + url
+  let { path, type, queryType } = opt
+
+  let prefix =
+    type === 'prometheus'
+      ? PROMETHEUS_ENDPOINT_HOST + PROMETHEUS_API_PREFIX
+      : PD_ENDPOINT_HOST + PD_API_PREFIX
+
+  console.log(queryType)
+
   const nOpt = Object.assign({}, opt, {
-    url,
+    url: prefix + path,
   })
 
   return axios(nOpt)
@@ -40,7 +51,13 @@ export default function API(opt) {
       console.log('http response', response)
       // TODO: abstract status code handler
       const { status, data, error } = response
-      if (status === 200 || status === 201 || status === 202 || status === 204)
+      if (
+        status === 200 ||
+        status === 201 ||
+        status === 202 ||
+        status === 204 ||
+        status === 'success'
+      )
         return data
       else console.log(error)
     })

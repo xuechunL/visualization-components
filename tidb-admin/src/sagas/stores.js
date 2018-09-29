@@ -9,7 +9,7 @@ import { stores, store } from '../actions'
 export function* fetchStores() {
   yield put(stores.request())
   const data = yield call(API, {
-    url: '/stores',
+    path: '/stores',
   })
   if (data) yield put(stores.success(data.stores))
   else yield put(stores.failure(data.message || 'REQUEST FAILURE'))
@@ -19,7 +19,7 @@ export function* fetchStores() {
 export function* fetchStore(action) {
   yield put(store.request())
   const data = yield call(API, {
-    url: `/store/${action.payload.id}`,
+    path: `/store/${action.payload.id}`,
   })
   console.log('store', data)
   if (data) yield put(store.success(data))
