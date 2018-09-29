@@ -1,14 +1,14 @@
 // in src/sagas/stores.js
 import { put, call, takeEvery } from 'redux-saga/effects'
 
-import { API } from '../services'
+import { pdApi } from '../services'
 import { labels, labelsStores } from '../actions'
 
 // TODO: abstract response handler
 // fetch all label values
 export function* fetchLabels() {
   yield put(labels.request())
-  const data = yield call(API, {
+  const data = yield call(pdApi, {
     path: '/labels',
   })
   yield put(labels.success(data))
@@ -18,7 +18,7 @@ export function* fetchLabels() {
 // fetch stores that have specific label values.
 export function* fetchLabelsStores() {
   yield put(labelsStores.request())
-  const data = yield call(API, {
+  const data = yield call(pdApi, {
     path: `/labels/stores`,
   })
   yield put(labelsStores.success(data))

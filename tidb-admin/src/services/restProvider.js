@@ -15,7 +15,7 @@ import { stringify } from 'query-string'
 import _ from 'lodash'
 // import { store } from '../actions'
 
-const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SEVER || ''}` // pd endpoint host
+const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SERVER || ''}` // pd endpoint host
 const PD_API_PREFIX = '/pd/api/v1'
 const apiUrl = PD_ENDPOINT_HOST + PD_API_PREFIX
 

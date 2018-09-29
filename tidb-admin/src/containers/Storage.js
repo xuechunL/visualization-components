@@ -9,7 +9,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
-import { RegionList, StoreList, RegionsChartList } from '../components/storage'
+import { RegionList, RegionsChartList } from '../components/storage'
 
 const styles = {
   summary: {
@@ -56,12 +56,12 @@ class Storage extends React.Component {
 
     dispatch({ type: 'FETCH_LABELS' })
     dispatch({ type: 'FETCH_LABELS_STORES' })
-    dispatch({ type: 'FETCH_STORES' })
+    // dispatch({ type: 'FETCH_STORES' })
     dispatch({ type: 'FETCH_REGIONS' })
   }
 
   render() {
-    const { stores, regions, classes } = this.props
+    const { regions, classes } = this.props
 
     const titleCls = {
       variant: 'headline',
@@ -77,8 +77,6 @@ class Storage extends React.Component {
         </Card>
 
         <RegionsChartList regions={regions} classes={classes} />
-
-        <StoreList stores={stores} classes={classes} />
         <RegionList regions={regions} classes={classes} />
       </div>
     )
@@ -87,18 +85,18 @@ class Storage extends React.Component {
 
 Storage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  stores: PropTypes.array,
+  // stores: PropTypes.array,
   regions: PropTypes.array,
   theme: PropTypes.string,
 }
 
 function mapStateToProps(state) {
   const {
-    pdServers: { stores, regions },
+    pdServers: { regions },
   } = state
 
   return {
-    stores: stores.list,
+    // stores: stores.list,
     regions: regions.list,
   }
 }

@@ -2,6 +2,7 @@
 import { all } from 'redux-saga/effects'
 import { watchFetchLabels, watchFetchLabelsStores } from './labels'
 import { watchFetchClusterStatus } from './cluster'
+import { watchFetchMembers } from './members'
 import { watchFetchStores, watchFetchStore } from './stores'
 import {
   watchFetchRegions,
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     watchFetchClusterStatus(),
     watchFetchLabels(),
     watchFetchLabelsStores(),
+    watchFetchMembers(),
     watchFetchStores(),
     watchFetchStore(),
     watchFetchRegions(),

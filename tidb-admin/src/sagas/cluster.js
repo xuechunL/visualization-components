@@ -1,13 +1,13 @@
 // in src/sagas/cluster.js
 import { put, call, takeEvery } from 'redux-saga/effects'
-import { API } from '../services'
+import { pdApi } from '../services'
 import { cluster } from '../actions'
 
 // fetch cluster status
 export function* fetchClusterStatus() {
   yield put(cluster.request())
-  // const { data, message } = yield call(API, { path: '/cluster/status' })
-  const data = yield call(API, {
+  // const { data, message } = yield call(pdApi, { path: '/cluster/status' })
+  const data = yield call(pdApi, {
     path: '/cluster/status',
   })
   if (data) yield put(cluster.success(data))

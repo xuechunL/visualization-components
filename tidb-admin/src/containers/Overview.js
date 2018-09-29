@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import _ from 'lodash'
+import classNames from 'classnames'
 
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -22,6 +23,15 @@ const styles = {
   },
   cardTitle: {
     padding: '16px 24px',
+  },
+  label: {
+    display: 'inline-block',
+    padding: '2px 12px',
+    color: '#00C853',
+    // color: '#fff',
+  },
+  abnormal: {
+    color: '#D50000',
   },
 }
 
@@ -43,6 +53,7 @@ class Overview extends React.Component {
     const { dispatch } = this.props
 
     dispatch({ type: 'FETCH_CLUSTER_STATUS' })
+    dispatch({ type: 'FETCH_STORES' })
   }
 
   handleChangeTheme() {
@@ -51,7 +62,9 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, theme, classes } = this.props
+    const { cluster, stores, classes } = this.props
+    console.log(stores)
+    // if (stores.length) return null
 
     const titleCls = {
       variant: 'headline',
@@ -59,27 +72,96 @@ class Overview extends React.Component {
       className: classes.cardTitle,
     }
 
+    // TODO: abstract and polish capacity and available storage
+    // const unit = stores[0].status.capacity.split(' ')[1]
+    const sumCapacity = _.sum(
+      _.map(stores, s => +s.status.capacity.split(' ')[0])
+    )
+    const sumAvailable = _.sum(
+      _.map(stores, s => +s.status.available.split(' ')[0])
+    )
+
+    // TODO: abstract store status
+
+    const storesGroupByState = _.countBy(stores, s => s.store.state_name)
+    console.log('stores group by state name', storesGroupByState)
+
     return (
       <div className={classes.root}>
         <Card className={classes.summary}>
           <Typography {...titleCls}>Overview</Typography>
           <CardContent>
-            <p>Admin Theme: {_.upperCase(theme)}</p>
+            <ClusterSummary cluster={cluster} />
+            {/* <p>Admin Theme: {_.upperCase(theme)}</p> */}
             <p>Lorem ipsum sic dolor amet...</p>
           </CardContent>
         </Card>
 
         <Card>
-          <Typography {...titleCls}>Cluster Status</Typography>
+          <Typography {...titleCls}>Stores Storage</Typography>
           <CardContent>
-            <ClusterSummary cluster={cluster} />
-            {/* <Button
-              variant="outlined"
-              color="primary"
-              onClick={this.handleChangeTheme}
-            >
-              DarK
-            </Button> */}
+            Storage Capacity: {sumCapacity}{' '}
+            {stores[0] && stores[0].status.capacity.split(' ')[1]}
+          </CardContent>
+          <CardContent>
+            Current Storage Size: {sumCapacity - sumAvailable}{' '}
+            {stores[0] && stores[0].status.capacity.split(' ')[1]}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <Typography {...titleCls}>Stores Status</Typography>
+          <CardContent>
+            <ul>
+              <li className={classes.stateUp}>
+                Up Stores:{' '}
+                <span
+                  className={classNames(classes.label)}
+                  data-count={storesGroupByState['Up'] || 0}>
+                  {storesGroupByState['Up'] || 0}
+                </span>
+              </li>
+              <li className={classes.disconnect}>
+                Disconnect Stores:
+                <span
+                  className={classNames(classes.label, classes.abnormal)}
+                  data-count={storesGroupByState['Disconnect'] || 0}>
+                  {storesGroupByState['Disconnect'] || 0}
+                </span>
+              </li>
+              <li className={classes.lowSpace}>
+                LowSapce Stores:
+                <span
+                  className={classNames(classes.label, classes.abnormal)}
+                  data-count={storesGroupByState['LowSpace'] || 0}>
+                  {storesGroupByState['LowSpace'] || 0}
+                </span>
+              </li>
+              <li className={classes.down}>
+                Down Stores:
+                <span
+                  className={classNames(classes.label, classes.abnormal)}
+                  data-count={storesGroupByState['Down'] || 0}>
+                  {storesGroupByState['Down'] || 0}
+                </span>
+              </li>
+              <li className={classes.offline}>
+                Offline Stores:
+                <span
+                  className={classNames(classes.label, classes.abnormal)}
+                  data-count={storesGroupByState['Offline'] || 0}>
+                  {storesGroupByState['Offline'] || 0}
+                </span>
+              </li>
+              <li className={classes.tombstone}>
+                Tombstone Stores:
+                <span
+                  className={classNames(classes.label)}
+                  data-count={storesGroupByState['Tombstone'] || 0}>
+                  {storesGroupByState['Tombstone'] || 0}
+                </span>
+              </li>
+            </ul>
           </CardContent>
         </Card>
       </div>
@@ -95,12 +177,13 @@ Overview.propTypes = {
 
 function mapStateToProps(state) {
   const {
-    pdServers: { cluster },
+    pdServers: { cluster, stores },
     globalUI: { theme },
   } = state
 
   return {
     cluster,
+    stores: stores.list,
     theme,
   }
 }

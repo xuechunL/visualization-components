@@ -10,6 +10,8 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
+import { PDList, StoreList } from '../components/clustermap'
+
 import { theme } from '../actions'
 
 const styles = {
@@ -23,12 +25,9 @@ const styles = {
   cardTitle: {
     padding: '16px 24px',
   },
-}
-
-const ClusterSummary = ({ cluster }) => {
-  // TODO: loading
-  if (_.isNull(cluster.status)) return null
-  return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
+  link: {
+    float: 'right',
+  },
 }
 
 class ClusterMap extends React.Component {
@@ -42,7 +41,9 @@ class ClusterMap extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch({ type: 'FETCH_CLUSTER_STATUS' })
+    dispatch({ type: 'FETCH_MEMBERS' })
+    dispatch({ type: 'FETCH_STORES' })
+    // TODO: TiDB Servers
   }
 
   handleChangeTheme() {
@@ -51,7 +52,7 @@ class ClusterMap extends React.Component {
   }
 
   render() {
-    const { cluster, theme, classes } = this.props
+    const { stores, members, theme, classes } = this.props
 
     const titleCls = {
       variant: 'headline',
@@ -70,9 +71,21 @@ class ClusterMap extends React.Component {
         </Card>
 
         <Card>
-          <Typography {...titleCls}>Cluster Status</Typography>
+          <Typography {...titleCls}>TiDB Servers</Typography>
+          <CardContent>TODO...</CardContent>
+        </Card>
+
+        <Card>
+          <Typography {...titleCls}>PD Servers</Typography>
           <CardContent>
-            <ClusterSummary cluster={cluster} />
+            <PDList members={members} classes={classes} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <Typography {...titleCls}>TiKV Servers</Typography>
+          <CardContent>
+            <StoreList stores={stores} classes={classes} />
           </CardContent>
         </Card>
       </div>
@@ -88,12 +101,13 @@ ClusterMap.propTypes = {
 
 function mapStateToProps(state) {
   const {
-    pdServers: { cluster },
+    pdServers: { members, stores },
     globalUI: { theme },
   } = state
 
   return {
-    cluster,
+    stores: stores.list,
+    members,
     theme,
   }
 }

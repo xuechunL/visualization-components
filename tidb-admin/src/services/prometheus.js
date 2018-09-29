@@ -1,4 +1,4 @@
-// in src/services/endpoint.js
+// in src/services/prometheus.js
 import axios from 'axios'
 
 axios.defaults.timeout = 10000
@@ -17,27 +17,16 @@ axios.interceptors.response.use(
   }
 )
 
-// export environment variables with create-react-app
-// https://serverless-stack.com/chapters/environments-in-create-react-app.html
-const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SEVER || ''}` // pd endpoint host
-const PD_API_PREFIX = '/pd/api/v1'
-
 // https://prometheus.io/docs/prometheus/latest/querying/api/
-const PROMETHEUS_ENDPOINT_HOST = `${process.env.REACT_APP_PROMETHEUS_SEVER ||
+const PROMETHEUS_SERVER_HOST = `${process.env.REACT_APP_PROMETHEUS_SERVER ||
   ''}` // pd endpoint host
 const PROMETHEUS_API_PREFIX = '/api/v1'
 
-// FIXME: CORS https://github.com/axios/axios/issues/853
-// CORS Chrome extensions: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
-
-export default function API(opt) {
+export default function prometheusApi(opt) {
   console.log('API is called with ', opt)
-  let { path, type, queryType } = opt
+  let { path, queryType } = opt
 
-  let prefix =
-    type === 'prometheus'
-      ? PROMETHEUS_ENDPOINT_HOST + PROMETHEUS_API_PREFIX
-      : PD_ENDPOINT_HOST + PD_API_PREFIX
+  let prefix = PROMETHEUS_SERVER_HOST + PROMETHEUS_API_PREFIX
 
   console.log(queryType)
 
@@ -49,16 +38,8 @@ export default function API(opt) {
     .then(function(response) {
       // success
       console.log('http response', response)
-      // TODO: abstract status code handler
       const { status, data, error } = response
-      if (
-        status === 200 ||
-        status === 201 ||
-        status === 202 ||
-        status === 204 ||
-        status === 'success'
-      )
-        return data
+      if (status === 'success') return data
       else console.log(error)
     })
     .catch(error => {

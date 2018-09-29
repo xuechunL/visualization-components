@@ -1,14 +1,14 @@
 // in src/sagas/regions.js
 import { put, call, takeEvery } from 'redux-saga/effects'
 
-import { API } from '../services'
+import { pdApi } from '../services'
 import { regions, region } from '../actions'
 
 // TODO: abstract response handler
 // fetch region list
 export function* fetchRegions() {
   yield put(regions.request())
-  const data = yield call(API, {
+  const data = yield call(pdApi, {
     path: '/regions',
   })
   if (data) yield put(regions.success(data.regions))
@@ -18,7 +18,7 @@ export function* fetchRegions() {
 // fetch a specific region by id
 export function* fetchRegionById(action) {
   yield put(region.request())
-  const data = yield call(API, {
+  const data = yield call(pdApi, {
     path: `/region/id/${action.payload.id}`,
   })
   console.log('region', data)
@@ -29,7 +29,7 @@ export function* fetchRegionById(action) {
 // fetch a specific region by key
 export function* fetchRegionByKey(action) {
   yield put(region.request())
-  const data = yield call(API, {
+  const data = yield call(pdApi, {
     path: `/region/key/${action.payload.key}`,
   })
   console.log('region', data)
