@@ -13,14 +13,14 @@ import { Sankey, Hint } from 'react-vis'
 // mock data
 import * as DataFlow from './flow.json'
 
-const BLURRED_LINK_OPACITY = 0.3;
-const FOCUSED_LINK_OPACITY = 0.6;
+const BLURRED_LINK_OPACITY = 0.3
+const FOCUSED_LINK_OPACITY = 0.6
 
-const nodes = [{name: 'store#1'}, {name: 'store#4'}, {name: 'store#5'}];
+const nodes = [{ name: 'store#1' }, { name: 'store#4' }, { name: 'store#5' }]
 const links = [
-  {source: 0, target: 1, value: 100},
-  {source: 0, target: 2, value: 200},
-  {source: 1, target: 2, value: 200}
+  { source: 0, target: 1, value: 100 },
+  { source: 0, target: 2, value: 200 },
+  { source: 1, target: 2, value: 200 },
 ]
 
 const styles = {
@@ -32,8 +32,8 @@ const styles = {
     justifyContent: 'space-between',
     padding: '10px 0',
     width: '75%',
-    margin: 'auto'
-  }
+    margin: 'auto',
+  },
 }
 
 const MODE = ['justify', 'center', 'left', 'right']
@@ -41,7 +41,7 @@ const MODE = ['justify', 'center', 'left', 'right']
 export default class RegionsWriteFlow extends React.Component {
   state = {
     modeIndex: 0,
-    activeLink: null
+    activeLink: null,
   }
 
   updateModeIndex = increment => () => {
@@ -52,19 +52,20 @@ export default class RegionsWriteFlow extends React.Component {
   }
 
   renderHint() {
-    const {activeLink} = this.state;
+    const { activeLink } = this.state
 
     // calculate center x,y position of link for positioning of hint
-    const x = activeLink.source.x1 + ((activeLink.target.x0 - activeLink.source.x1) / 2);
-    const y = activeLink.y0 - ((activeLink.y0 - activeLink.y1) / 2);
+    const x =
+      activeLink.source.x1 + (activeLink.target.x0 - activeLink.source.x1) / 2
+    const y = activeLink.y0 - (activeLink.y0 - activeLink.y1) / 2
 
     const hintValue = {
-      [`${activeLink.source.name} ➞ ${activeLink.target.name}`]: activeLink.value
-    };
+      [`${activeLink.source.name} ➞ ${
+        activeLink.target.name
+      }`]: activeLink.value,
+    }
 
-    return (
-      <Hint x={x} y={y} value={hintValue} />
-    );
+    return <Hint x={x} y={y} value={hintValue} />
   }
 
   render() {
@@ -82,8 +83,7 @@ export default class RegionsWriteFlow extends React.Component {
         <Typography
           variant="headline"
           component="h2"
-          className={classNames(classes.subHeader, classes.cardTitle)}
-        >
+          className={classNames(classes.subHeader, classes.cardTitle)}>
           Regions With The Highest Write Flow.
         </Typography>
         <CardContent>
@@ -109,33 +109,35 @@ export default class RegionsWriteFlow extends React.Component {
             nodePadding={10}
             style={{
               links: {
-                opacity: 0.3
+                opacity: 0.3,
               },
               labels: {
-                fontSize: '8px'
+                fontSize: '8px',
               },
               rects: {
                 strokeWidth: 2,
-                stroke: '#1A3177'
-              }
+                stroke: '#1A3177',
+              },
             }}
           />
 
           <div>Stores Write Flow</div>
           <Sankey
-            nodes={nodes.map(d => ({...d}))}
+            nodes={nodes.map(d => ({ ...d }))}
             links={links.map((d, i) => ({
               ...d,
-              opacity: activeLink && i === activeLink.index ? FOCUSED_LINK_OPACITY : BLURRED_LINK_OPACITY
+              opacity:
+                activeLink && i === activeLink.index
+                  ? FOCUSED_LINK_OPACITY
+                  : BLURRED_LINK_OPACITY,
             }))}
             width={700}
             height={600}
             // do not use voronoi in combination with link mouse over
             hasVoronoi={false}
-            onLinkMouseOver={node => this.setState({activeLink: node})}
-            onLinkMouseOut={() => this.setState({activeLink: null})}
-            >
-            { activeLink && this.renderHint()}
+            onLinkMouseOver={node => this.setState({ activeLink: node })}
+            onLinkMouseOut={() => this.setState({ activeLink: null })}>
+            {activeLink && this.renderHint()}
           </Sankey>
         </CardContent>
       </Card>

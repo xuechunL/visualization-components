@@ -23,8 +23,7 @@ const StoreList = ({ stores, classes }) => (
         <Typography
           variant="headline"
           component="h3"
-          className={classNames(classes.subHeader, classes.cardTitle)}
-        >
+          className={classNames(classes.subHeader, classes.cardTitle)}>
           {`Store: ${item.store.id}`}
         </Typography>
         <CardContent>
@@ -38,8 +37,7 @@ const StoreList = ({ stores, classes }) => (
           <Button
             href={`#store/${item.store.id}`}
             className={classes.link}
-            color="primary"
-          >
+            color="primary">
             Status Details
           </Button>
         </CardContent>

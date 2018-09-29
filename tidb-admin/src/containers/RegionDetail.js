@@ -52,56 +52,53 @@ class RegionDetail extends React.Component {
   render() {
     if (_.isNull(this.props.region)) return null
 
-    const { region,classes } = this.props
+    const { region, classes } = this.props
 
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-            <Card key={region.id} className={classNames(classes.card)}>
-              <Typography
-                variant="headline"
-                component="h3"
-                className={classNames(classes.subHeader, classes.cardTitle)}
-              >
-                {`Region: ${region.id}`}
-              </Typography>
-              <CardContent>
-                {_.map(region, (value, key) => {
-                  if (!_.isObject(value))
-                    return (
-                      <p key={`${key}-${value}`}>
-                        {_.startCase(key)}: {value}
-                      </p>
-                    )
-                  if (key === 'epoch')
-                    return (
-                      <p key={`epoch-${value.conf_ver}-${value.version}`}>
-                        {_.startCase('conf_ver')}: {value.conf_ver},{' '}
-                        {_.startCase('version')}: {value.version}
-                      </p>
-                    )
-                  if (key === 'peers')
-                    return (
-                      <div key={`peers-${value[0].id}`} className={classes.row}>
-                        Peers:
-                        {_.map(value, v => (
-                          <Tooltip
-                            title={`Peer#${v.id}, Store#${v.store_id}`}
-                            key={`Peer#${v.id}, Store#${v.store_id}`}
-                          >
-                            <IconButton
-                              aria-label={`Peer#${v.id}, Store#${v.store_id}`}
-                            >
-                              <Crop54Icon />
-                            </IconButton>
-                          </Tooltip>
-                        ))}
-                      </div>
-                    )
-                })}
-              </CardContent>
-            </Card>
-          </Grid>
+          <Card key={region.id} className={classNames(classes.card)}>
+            <Typography
+              variant="headline"
+              component="h3"
+              className={classNames(classes.subHeader, classes.cardTitle)}>
+              {`Region: ${region.id}`}
+            </Typography>
+            <CardContent>
+              {_.map(region, (value, key) => {
+                if (!_.isObject(value))
+                  return (
+                    <p key={`${key}-${value}`}>
+                      {_.startCase(key)}: {value}
+                    </p>
+                  )
+                if (key === 'epoch')
+                  return (
+                    <p key={`epoch-${value.conf_ver}-${value.version}`}>
+                      {_.startCase('conf_ver')}: {value.conf_ver},{' '}
+                      {_.startCase('version')}: {value.version}
+                    </p>
+                  )
+                if (key === 'peers')
+                  return (
+                    <div key={`peers-${value[0].id}`} className={classes.row}>
+                      Peers:
+                      {_.map(value, v => (
+                        <Tooltip
+                          title={`Peer#${v.id}, Store#${v.store_id}`}
+                          key={`Peer#${v.id}, Store#${v.store_id}`}>
+                          <IconButton
+                            aria-label={`Peer#${v.id}, Store#${v.store_id}`}>
+                            <Crop54Icon />
+                          </IconButton>
+                        </Tooltip>
+                      ))}
+                    </div>
+                  )
+              })}
+            </CardContent>
+          </Card>
+        </Grid>
       </div>
     )
   }

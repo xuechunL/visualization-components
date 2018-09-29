@@ -33,7 +33,8 @@
                 "singleQuote": true,
                 "semi": false,
                 "tabWidth": 2,
-                "trailingComma": "es5"
+                "trailingComma": "es5",
+                "jsxBracketSameLine": true
             }
         ],
         "react/forbid-prop-types": ["off"],
@@ -43,6 +44,7 @@
         "react/jsx-indent-props": ["off"],
         "react/jsx-filename-extension": ["off"],
         "react/display-name": ["off"],
+        "react/jsx-child-element-spacing": ["off"],
         "import/no-named-as-default": ["off"],
         "no-unused-vars": [
             "error",
@@ -50,7 +52,9 @@
                 "ignoreRestSiblings": true
             }
         ],
-        "no-console": ["error", { "allow": ["warn", "error", "log"] }]
+        "no-console": ["error", {
+            "allow": ["warn", "error", "log"]
+        }]
     },
     "overrides": [{
         "files": ["**/*.spec.js"],

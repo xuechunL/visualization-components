@@ -8,7 +8,9 @@ import { regions, region } from '../actions'
 // fetch region list
 export function* fetchRegions() {
   yield put(regions.request())
-  const data = yield call(API, { url: '/regions' })
+  const data = yield call(API, {
+    url: '/regions',
+  })
   if (data) yield put(regions.success(data.regions))
   else yield put(regions.failure(data.message || 'REQUEST FAILURE'))
 }

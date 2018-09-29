@@ -30,7 +30,7 @@ const styles = {
   },
   chartCard: {
     maxWidth: '100%',
-    margin: '20px 0', 
+    margin: '20px 0',
     // transform: 'translate(-12px, 40px)',
   },
   link: {

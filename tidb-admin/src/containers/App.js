@@ -40,8 +40,7 @@ const App = () => (
     customSagas={[rootSaga]}
     dashboard={Overview}
     dataProvider={restProvider}
-    i18nProvider={i18nProvider}
-  >
+    i18nProvider={i18nProvider}>
     <Resource name="regions" list={RegionList} />
   </Admin>
 )

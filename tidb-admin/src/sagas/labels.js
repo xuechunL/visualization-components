@@ -8,7 +8,9 @@ import { labels, labelsStores } from '../actions'
 // fetch all label values
 export function* fetchLabels() {
   yield put(labels.request())
-  const data = yield call(API, { url: '/labels' })
+  const data = yield call(API, {
+    url: '/labels',
+  })
   yield put(labels.success(data))
   // else yield put(labels.failure(data.message || 'REQUEST FAILURE'))
 }

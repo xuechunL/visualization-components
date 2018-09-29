@@ -27,8 +27,7 @@ const RegionList = ({ regions, classes }) => (
         <Typography
           variant="headline"
           component="h3"
-          className={classNames(classes.subHeader, classes.cardTitle)}
-        >
+          className={classNames(classes.subHeader, classes.cardTitle)}>
           {`Region: ${item.id}`}
         </Typography>
         <CardContent>
@@ -53,11 +52,9 @@ const RegionList = ({ regions, classes }) => (
                   {_.map(value, v => (
                     <Tooltip
                       title={`Peer#${v.id}, Store#${v.store_id}`}
-                      key={`Peer#${v.id}, Store#${v.store_id}`}
-                    >
+                      key={`Peer#${v.id}, Store#${v.store_id}`}>
                       <IconButton
-                        aria-label={`Peer#${v.id}, Store#${v.store_id}`}
-                      >
+                        aria-label={`Peer#${v.id}, Store#${v.store_id}`}>
                         <Crop54Icon />
                       </IconButton>
                     </Tooltip>
@@ -69,8 +66,7 @@ const RegionList = ({ regions, classes }) => (
           <Button
             href={`#region/${item.id}`}
             className={classes.link}
-            color="primary"
-          >
+            color="primary">
             Region Details
           </Button>
         </CardContent>
