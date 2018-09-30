@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography'
 
 import { theme } from '../actions'
 
+import wrapWithPrometheusMetric from '../components/wrapwtihPrometheusMetric'
+import { LineChart } from '../components/chart'
+
 const styles = {
   summary: {
     marginBottom: '30px',
@@ -40,6 +43,8 @@ const ClusterSummary = ({ cluster }) => {
   if (_.isNull(cluster.status)) return null
   return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
 }
+
+let DemoChart = wrapWithPrometheusMetric(LineChart)
 
 class Overview extends React.Component {
   constructor(props) {
@@ -94,6 +99,7 @@ class Overview extends React.Component {
             <ClusterSummary cluster={cluster} />
             {/* <p>Admin Theme: {_.upperCase(theme)}</p> */}
             <p>Lorem ipsum sic dolor amet...</p>
+            <DemoChart />
           </CardContent>
         </Card>
 

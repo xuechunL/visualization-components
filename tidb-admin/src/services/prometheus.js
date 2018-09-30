@@ -24,14 +24,34 @@ const PROMETHEUS_API_PREFIX = '/api/v1'
 
 export default function prometheusApi(opt) {
   console.log('API is called with ', opt)
-  let { path, queryType } = opt
+  let { metricType = 'query', metricParams } = opt
+  let params
+  const prefix = PROMETHEUS_SERVER_HOST + PROMETHEUS_API_PREFIX
+  const metricRange = 900
 
-  let prefix = PROMETHEUS_SERVER_HOST + PROMETHEUS_API_PREFIX
+  console.log(metricType)
+  console.log(metricParams)
 
-  console.log(queryType)
+  if (metricType === 'query_range') {
+    let end = new Date().getTime() / 1000
+    let start = end - metricRange
+    params = {
+      // _cluster: name,
+      // _ns: namespace,
+      query: metricParams,
+      step: 1,
+      start,
+      end,
+    }
+  } else {
+    params = {
+      query: metricParams,
+    }
+  }
 
   const nOpt = Object.assign({}, opt, {
-    url: prefix + path,
+    url: ` ${prefix}/${metricType}`,
+    params,
   })
 
   return axios(nOpt)
