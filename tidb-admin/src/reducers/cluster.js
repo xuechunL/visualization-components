@@ -1,10 +1,11 @@
 // in src/reducers/cluster.js
-import { CLUSTER } from '../actions'
+import { CLUSTER, TIDB_SERVERS } from '../actions'
 
 export default function cluster(
   state = {
     isFetching: false,
     status: null,
+    tidbServers: [],
   },
   action
 ) {
@@ -16,6 +17,12 @@ export default function cluster(
         ...state,
         isFetching: false,
         status: action.payload.response,
+      }
+    case TIDB_SERVERS.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        tidbServers: action.payload.response,
       }
     default:
       return state

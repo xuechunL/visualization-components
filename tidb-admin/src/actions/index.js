@@ -34,6 +34,8 @@ function createRequestTypes(base) {
 
 // cluster actions type
 export const CLUSTER = createRequestTypes('CLUSTER')
+// tidb servers actions type
+export const TIDB_SERVERS = createRequestTypes('TIDB_SERVERS')
 // stores actions type
 export const STORES = createRequestTypes('STORES')
 export const STORE = createRequestTypes('STORE')
@@ -69,6 +71,7 @@ const requestActionModel = type => {
 export const cluster = requestActionModel(CLUSTER)
 export const labels = requestActionModel(LABELS)
 export const labelsStores = requestActionModel(LABELS_STORES)
+export const tidbServers = requestActionModel(TIDB_SERVERS)
 export const stores = requestActionModel(STORES)
 export const store = requestActionModel(STORE)
 export const members = requestActionModel(MEMBERS)

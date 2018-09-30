@@ -59,7 +59,7 @@ export default function prometheusApi(opt) {
       // success
       console.log('http response', response)
       const { status, data, error } = response
-      if (status === 'success') return data
+      if (status === 200 && data.data) return data.data.result
       else console.log(error)
     })
     .catch(error => {

@@ -1,6 +1,5 @@
 // in src/containers/ClusterMap.js
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import _ from 'lodash'
@@ -10,7 +9,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
-import { PDList, StoreList } from '../components/clustermap'
+import { PDList, StoreList, TiDBList } from '../components/clustermap'
 
 import { theme } from '../actions'
 
@@ -44,6 +43,7 @@ class ClusterMap extends React.Component {
     dispatch({ type: 'FETCH_MEMBERS' })
     dispatch({ type: 'FETCH_STORES' })
     // TODO: TiDB Servers
+    dispatch({ type: 'FETCH_TIDB_SERVERS' })
   }
 
   handleChangeTheme() {
@@ -52,7 +52,7 @@ class ClusterMap extends React.Component {
   }
 
   render() {
-    const { stores, members, theme, classes } = this.props
+    const { stores, members, tidbServers, theme, classes } = this.props
 
     const titleCls = {
       variant: 'headline',
@@ -72,7 +72,9 @@ class ClusterMap extends React.Component {
 
         <Card>
           <Typography {...titleCls}>TiDB Servers</Typography>
-          <CardContent>TODO...</CardContent>
+          <CardContent>
+            <TiDBList servers={tidbServers} classes={classes} />
+          </CardContent>
         </Card>
 
         <Card>
@@ -93,19 +95,14 @@ class ClusterMap extends React.Component {
   }
 }
 
-ClusterMap.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  cluster: PropTypes.object,
-  theme: PropTypes.string,
-}
-
 function mapStateToProps(state) {
   const {
-    pdServers: { members, stores },
+    pdServers: { members, stores, cluster },
     globalUI: { theme },
   } = state
 
   return {
+    tidbServers: cluster.tidbServers,
     stores: stores.list,
     members,
     theme,

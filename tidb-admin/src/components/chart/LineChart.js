@@ -1,6 +1,6 @@
 import React from 'react'
 
-function LineChart(props) {
+function LineChart() {
   return <div>Demo Metric Line Chart</div>
 }
 
