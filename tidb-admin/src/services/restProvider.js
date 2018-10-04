@@ -13,11 +13,11 @@ import {
 
 import { stringify } from 'query-string'
 import _ from 'lodash'
-// import { store } from '../actions'
 
-const PD_ENDPOINT_HOST = `${process.env.REACT_APP_PD_SERVER || ''}` // pd endpoint host
+const PD_ENDPOINT = `http://localhost:${process.env.REACT_APP_PD_PORT ||
+  '2379'}` // pd endpoint
 const PD_API_PREFIX = '/pd/api/v1'
-const apiUrl = PD_ENDPOINT_HOST + PD_API_PREFIX
+const apiUrl = PD_ENDPOINT + PD_API_PREFIX
 
 const format2RestfulList = data => {
   const list = _.map(data, item => _.assign({}, item.store, item.status))
