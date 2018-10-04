@@ -1,12 +1,13 @@
 import englishMessages from './i18n/en'
+import chineseMessages from './i18n/cn'
 
-const messages = {
-  fr: () => import('./i18n/fr.js').then(messages => messages.default),
+const asyncMessages = {
+  cn: chineseMessages,
 }
 
 export default locale => {
-  if (locale === 'fr') {
-    return messages[locale]()
+  if (locale === 'cn') {
+    return asyncMessages[locale]
   }
 
   // Always fallback on english
