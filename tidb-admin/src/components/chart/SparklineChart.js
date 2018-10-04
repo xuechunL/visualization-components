@@ -10,24 +10,28 @@ class SparklineChart extends React.Component {
   componentWillUnmount() {}
 
   render() {
-    const { width = 400, color = "blue", metric = [] } = this.props
-    let data = []
+    const { width = 400, color = "#2979ff", metric = [] } = this.props
 
     if (metric && metric.length) {
+      let data = []
       // TODO: multi tidb cluster ??? result.length
       // TODO: process data
       console.log('metric data', metric)
       const _metric = metric[0].values
       data = _metric.map(i => +i[1])
-      // data = data[0].values
+      return (
+        <Sparklines data={data} limit={20} margin={6} svgWidth={width} >
+          <SparklinesLine style={{ stroke: color, fill: "none" }} />
+          <SparklinesSpots size={2} style={{ stroke: color, fill: "white" }} />
+        </Sparklines>
+      )
+    } else {
+      // TODO: No Data
+      return <div> No data points!</div>
     }
-    console.log('metric data in sparkline', data)
-    return (
-      <Sparklines data={data} limit={20} margin={6} svgWidth={width} >
-        <SparklinesLine style={{ stroke: "#336aff", fill: "none" }} />
-        <SparklinesSpots size={2} style={{ stroke: "#336aff", fill: "white" }} />
-      </Sparklines>
-    )
+
+
+
   }
 }
 
