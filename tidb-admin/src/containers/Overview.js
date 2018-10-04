@@ -1,6 +1,6 @@
 // in src/containers/Overview.js
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 
 import _ from 'lodash'
@@ -13,8 +13,10 @@ import Typography from '@material-ui/core/Typography'
 
 import { theme } from '../actions'
 
-import wrapWithPrometheusMetric from '../components/wrapwtihPrometheusMetric'
-import { LineChart } from '../components/chart'
+import wrapWithPrometheusMetric, {
+  metricConnect,
+} from '../components/wrapwtihPrometheusMetric'
+import { SparklineChart } from '../components/chart'
 
 const styles = {
   summary: {
@@ -31,7 +33,6 @@ const styles = {
     display: 'inline-block',
     padding: '2px 12px',
     color: '#00C853',
-    // color: '#fff',
   },
   abnormal: {
     color: '#D50000',
@@ -44,7 +45,8 @@ const ClusterSummary = ({ cluster }) => {
   return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
 }
 
-let DemoChart = wrapWithPrometheusMetric(LineChart)
+let QPSChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
+let ConnectionsChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
 
 class Overview extends React.Component {
   constructor(props) {
@@ -57,8 +59,21 @@ class Overview extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
+    const qpsMetric = {
+      metricParams: 'tidb_server_query_totals',
+      metricType: 'query_range',
+    }
+
+    const connectMetric = {
+      metricParams: 'tidb_server_connections',
+      metricType: 'query_range',
+    }
+
     dispatch({ type: 'FETCH_CLUSTER_STATUS' })
     dispatch({ type: 'FETCH_STORES' })
+    // TODO: move to one interval async function
+    dispatch({ type: 'FETCH_METRICS', payload: { metric: qpsMetric } })
+    dispatch({ type: 'FETCH_METRICS', payload: { metric: connectMetric } })
   }
 
   handleChangeTheme() {
@@ -67,9 +82,8 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, stores, classes } = this.props
-    console.log(stores)
-    // if (stores.length) return null
+    const { cluster, stores, classes, metrics } = this.props
+    // console.log(stores)
 
     const titleCls = {
       variant: 'headline',
@@ -78,7 +92,6 @@ class Overview extends React.Component {
     }
 
     // TODO: abstract and polish capacity and available storage
-    // const unit = stores[0].status.capacity.split(' ')[1]
     const sumCapacity = _.sum(
       _.map(stores, s => +s.status.capacity.split(' ')[0])
     )
@@ -87,9 +100,8 @@ class Overview extends React.Component {
     )
 
     // TODO: abstract store status
-
     const storesGroupByState = _.countBy(stores, s => s.store.state_name)
-    console.log('stores group by state name', storesGroupByState)
+    // console.log('stores group by state name', storesGroupByState)
 
     return (
       <div className={classes.root}>
@@ -97,9 +109,11 @@ class Overview extends React.Component {
           <Typography {...titleCls}>Overview</Typography>
           <CardContent>
             <ClusterSummary cluster={cluster} />
-            {/* <p>Admin Theme: {_.upperCase(theme)}</p> */}
-            <p>Lorem ipsum sic dolor amet...</p>
-            <DemoChart />
+            <QPSChart metrics={metrics} metricName="tidb_server_query_totals" />
+            <ConnectionsChart
+              metrics={metrics}
+              metricName="tidb_server_connections"
+            />
           </CardContent>
         </Card>
 
@@ -175,22 +189,19 @@ class Overview extends React.Component {
   }
 }
 
-Overview.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  cluster: PropTypes.object,
-  theme: PropTypes.string,
-}
-
 function mapStateToProps(state) {
   const {
-    pdServers: { cluster, stores },
+    pdServers: { cluster, stores, metrics },
     globalUI: { theme },
   } = state
 
   return {
-    cluster,
-    stores: stores.list,
     theme,
+    cluster,
+    metrics,
+    // qpsMetric: metrics.tidb_server_query_totals,
+    // connMetric: metrics.tidb_server_connections,
+    stores: stores.list,
   }
 }
 

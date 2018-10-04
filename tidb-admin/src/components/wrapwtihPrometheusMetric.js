@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { prometheusApi } from '../services'
+// import { prometheusApi } from '../services'
 
 export const metricConnect = connect(state => {
   const {
     globalUI: { theme },
+    pdServers: { metrics },
   } = state
   return {
     theme,
+    qpsMetric: metrics.tidb_server_query_totals,
+    connMetric: metrics.tidb_server_connections,
   }
 })
+
+// let metricTimer
+// const period = 60 * 1000
 
 const wrapWithPrometheusMetric = WrappedComponent => {
   class WC extends Component {
@@ -24,27 +31,49 @@ const wrapWithPrometheusMetric = WrappedComponent => {
     }
 
     componentDidMount() {
-      let {
-        metricParams = 'tidb_server_query_totals',
-        metricType = 'query_range',
-      } = this.props
-      prometheusApi({ metricType, metricParams })
+      // const {
+      //   metric: {
+      //     metricParams = 'tidb_server_query_totals',
+      //     metricType = 'query_range',
+      //   },
+      // } = this.props
+    }
+
+    componentWillUnmount() {
+      // metricTimer = clearInterval(metricTimer)
     }
 
     // UNSAFE_componentWillReceiveProps(nextProps) {}
 
-    shouldComponentUpdate(nextProps, nextState) {
-      return nextState.isUpdated
-    }
+    // getMetricsData(metric) {
+    //   const {
+    //     metricParams = 'tidb_server_query_totals',
+    //     metricType = 'query_range',
+    //   } = metric
+    // }
+
+    // shouldComponentUpdate(nextProps, nextState) {}
 
     render() {
+      const { metrics, metricName } = this.props
+
+      console.log('metrics', metrics)
+      console.log('metric type', this.props.metricName)
+      // TODO: multi tidb cluster
       return (
         <div className="metric-wrapper">
-          <WrappedComponent />
+          <WrappedComponent metric={this.props.metrics[metricName]} />
         </div>
       )
     }
   }
+
+  WC.propTypes = {
+    metrics: PropTypes.object,
+    metricName: PropTypes.string,
+  }
+
   return WC
 }
+
 export default wrapWithPrometheusMetric

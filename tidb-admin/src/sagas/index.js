@@ -4,6 +4,7 @@ import { watchFetchLabels, watchFetchLabelsStores } from './labels'
 import { watchFetchClusterStatus, watchFetchFetchTiDBServers } from './cluster'
 import { watchFetchMembers } from './members'
 import { watchFetchStores, watchFetchStore } from './stores'
+import { watchFetchMetrics } from './metrics'
 import {
   watchFetchRegions,
   watchFetchRegionById,
@@ -22,5 +23,6 @@ export default function* rootSaga() {
     watchFetchRegions(),
     watchFetchRegionById(),
     watchFetchRegionByKey(),
+    watchFetchMetrics(),
   ])
 }

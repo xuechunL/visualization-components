@@ -48,6 +48,8 @@ export const REGION = createRequestTypes('REGION')
 // labels actions type
 export const LABELS = createRequestTypes('LABELS')
 export const LABELS_STORES = createRequestTypes('LABELS_STORES')
+// metrics actions type
+export const METRICS = createRequestTypes('METRICS')
 
 /*****************************
  * export actions in a model *
@@ -78,6 +80,8 @@ export const members = requestActionModel(MEMBERS)
 export const member = requestActionModel(MEMBER)
 export const regions = requestActionModel(REGIONS)
 export const region = requestActionModel(REGION)
+// metrics
+export const metrics = requestActionModel(METRICS)
 
 // change theme actions
 export const theme = {

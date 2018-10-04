@@ -3,7 +3,8 @@
 
 import React from 'react'
 // eslint-disable-next-line
-import { Admin, Resource } from 'react-admin/lib';
+import { Admin, Resource } from 'react-admin/lib'
+import createHistory from 'history/createBrowserHistory'
 import { createMuiTheme } from '@material-ui/core/styles'
 import indigo from '@material-ui/core/colors/indigo'
 import blue from '@material-ui/core/colors/blue'
@@ -29,11 +30,16 @@ const theme = createMuiTheme({
   },
 })
 
+const history = createHistory()
+
+// TODO: toggle i18n
+
 // The <Admin> app uses redux-saga to handle side effects (AJAX calls, notifications, re-directions, etc).
 const App = () => (
   <Admin
     title="TiDB Admin"
     theme={theme}
+    history={history}
     appLayout={AppLayout}
     customRoutes={routes}
     customReducers={{ pdServers: rootReducer, globalUI: uiReducer }}
