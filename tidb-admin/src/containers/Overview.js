@@ -16,7 +16,7 @@ import { theme } from '../actions'
 import wrapWithPrometheusMetric, {
   metricConnect,
 } from '../components/wrapwtihPrometheusMetric'
-import { SparklineChart } from '../components/chart'
+import { SparklineChart, LineChart } from '../components/chart'
 
 const styles = {
   summary: {
@@ -47,6 +47,8 @@ const ClusterSummary = ({ cluster }) => {
 
 let QPSChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
 let ConnectionsChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
+let ConnLineChart = metricConnect(wrapWithPrometheusMetric(LineChart))
+let QPSLineChart = metricConnect(wrapWithPrometheusMetric(LineChart))
 
 class Overview extends React.Component {
   constructor(props) {
@@ -111,6 +113,14 @@ class Overview extends React.Component {
             <ClusterSummary cluster={cluster} />
             <QPSChart metrics={metrics} metricName="tidb_server_query_totals" />
             <ConnectionsChart
+              metrics={metrics}
+              metricName="tidb_server_connections"
+            />
+            <QPSLineChart
+              metrics={metrics}
+              metricName="tidb_server_query_totals"
+            />
+            <ConnLineChart
               metrics={metrics}
               metricName="tidb_server_connections"
             />

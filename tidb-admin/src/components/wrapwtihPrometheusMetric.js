@@ -55,9 +55,8 @@ const wrapWithPrometheusMetric = WrappedComponent => {
     // shouldComponentUpdate(nextProps, nextState) {}
 
     render() {
-      const { metrics, metricName } = this.props
+      const { metricName } = this.props
 
-      console.log('metrics', metrics)
       console.log('metric type', this.props.metricName)
       // TODO: multi tidb cluster
       return (
