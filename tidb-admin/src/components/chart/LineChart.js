@@ -99,16 +99,6 @@ class LineChart extends React.Component {
                 />
               )
             })}
-            <LineSeries
-              key={'demo-line'}
-              data={[
-                { x: 1538710044.736, y: 1 },
-                { x: 1538710059.736, y: 3 },
-                { x: 1538710143.736, y: 5 },
-              ]}
-              {...lineSeriesProps}
-              color={'#0D676C'}
-            />
             <Crosshair values={crosshairValues}>
               {crosshairValues.length && (
                 <div
