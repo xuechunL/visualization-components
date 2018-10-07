@@ -35,7 +35,7 @@ const PDList = ({ members, classes }) => (
               </p>
             ))}
             <Button
-              href={`#member/${item.member_id}`}
+              href={`/pd/${item.member_id}`}
               className={classes.link}
               color="primary">
               Status Details

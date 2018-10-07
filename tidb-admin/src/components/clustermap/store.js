@@ -28,7 +28,7 @@ const StoreList = ({ stores, classes }) => (
             )
           })}
           <Button
-            href={`#store/${item.store.id}`}
+            href={`/store/${item.store.id}`}
             className={classes.link}
             color="primary">
             Status Details
