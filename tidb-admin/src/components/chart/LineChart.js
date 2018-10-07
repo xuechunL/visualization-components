@@ -53,7 +53,7 @@ class LineChart extends React.Component {
 
   render() {
     const {
-      width = 300,
+      width = 400,
       height = 150,
       theme = 'typpeA',
       metric = [],
@@ -88,7 +88,9 @@ class LineChart extends React.Component {
             height={height}>
             <VerticalGridLines />
             <HorizontalGridLines />
-            <XAxis tickFormat={v => formatDate(v).split(' ')[1]} />
+            <XAxis
+              tickFormat={v => new Date(v * 1000).toTimeString().slice(0, 5)}
+            />
             <YAxis />
             {metric.map(m => {
               return (
@@ -128,7 +130,6 @@ class LineChart extends React.Component {
                 </div>
               )}
             </Crosshair>
-            {/* <Crosshair values={crosshairValues} /> */}
           </XYPlot>
         </div>
       )

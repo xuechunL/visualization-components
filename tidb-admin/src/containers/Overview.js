@@ -28,7 +28,8 @@ const styles = {
     margin: 10,
   },
   metricsCard: {
-    // maxWidth: 360,
+    width: 480,
+    overflowX: 'auto',
   },
   cardTitle: {
     padding: '16px 24px',
@@ -110,7 +111,7 @@ class Overview extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Card className={classes.card}>
+        <Card className={classNames(classes.card, classes.metricsCard)}>
           <Typography {...titleCls}>QPS</Typography>
           <CardContent>
             <QPSLineChart
@@ -120,7 +121,7 @@ class Overview extends React.Component {
           </CardContent>
         </Card>
 
-        <Card className={classes.card}>
+        <Card className={classNames(classes.card, classes.metricsCard)}>
           <Typography {...titleCls}>Connection Count</Typography>
           <CardContent>
             <ConnLineChart
