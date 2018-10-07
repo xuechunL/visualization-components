@@ -33,6 +33,7 @@ const theme = createMuiTheme({
 
 const history = createHistory()
 
+// TODO: refactor Login Page
 // TODO: toggle i18n
 
 // The <Admin> app uses redux-saga to handle side effects (AJAX calls, notifications, re-directions, etc).
