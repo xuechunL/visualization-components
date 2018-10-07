@@ -12,6 +12,7 @@ import blue from '@material-ui/core/colors/blue'
 // write our own Data Provider.
 import { restProvider } from '../services'
 import i18nProvider from '../i18nProvider'
+import authProvider from '../authProvider'
 import rootSaga from '../sagas'
 import rootReducer from '../reducers'
 import uiReducer from '../reducers/ui'
@@ -46,7 +47,8 @@ const App = () => (
     customSagas={[rootSaga]}
     dashboard={Overview}
     dataProvider={restProvider}
-    i18nProvider={i18nProvider}>
+    i18nProvider={i18nProvider}
+    authProvider={authProvider}>
     <Resource name="stores" list={StoreList} />
   </Admin>
 )

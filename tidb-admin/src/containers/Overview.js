@@ -22,7 +22,6 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
   },
   card: {
     width: 360,
