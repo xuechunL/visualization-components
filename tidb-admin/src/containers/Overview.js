@@ -16,15 +16,20 @@ import { theme } from '../actions'
 import wrapWithPrometheusMetric, {
   metricConnect,
 } from '../components/wrapwtihPrometheusMetric'
-import { SparklineChart, LineChart } from '../components/chart'
+import { LineChart } from '../components/chart'
 
 const styles = {
-  summary: {
-    marginBottom: '30px',
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   card: {
-    maxWidth: 320,
+    width: 360,
     margin: 10,
+  },
+  metricsCard: {
+    // maxWidth: 360,
   },
   cardTitle: {
     padding: '16px 24px',
@@ -39,14 +44,14 @@ const styles = {
   },
 }
 
-const ClusterSummary = ({ cluster }) => {
-  // TODO: loading
-  if (_.isNull(cluster.status)) return null
-  return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
-}
+// const ClusterSummary = ({ cluster }) => {
+//   // TODO: loading
+//   if (_.isNull(cluster.status)) return null
+//   return <div>Raft Bootstrap Time: {cluster.status.raft_bootstrap_time}</div>
+// }
 
-let QPSChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
-let ConnectionsChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
+// let QPSChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
+// let ConnectionsChart = metricConnect(wrapWithPrometheusMetric(SparklineChart))
 let ConnLineChart = metricConnect(wrapWithPrometheusMetric(LineChart))
 let QPSLineChart = metricConnect(wrapWithPrometheusMetric(LineChart))
 
@@ -73,7 +78,6 @@ class Overview extends React.Component {
 
     dispatch({ type: 'FETCH_CLUSTER_STATUS' })
     dispatch({ type: 'FETCH_STORES' })
-    // TODO: move to one interval async function
     dispatch({ type: 'FETCH_METRICS', payload: { metric: qpsMetric } })
     dispatch({ type: 'FETCH_METRICS', payload: { metric: connectMetric } })
   }
@@ -84,7 +88,7 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, stores, classes, metrics } = this.props
+    const { stores, classes, metrics } = this.props
     // console.log(stores)
 
     const titleCls = {
@@ -107,19 +111,19 @@ class Overview extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Card className={classes.summary}>
-          <Typography {...titleCls}>Overview</Typography>
+        <Card className={classes.card}>
+          <Typography {...titleCls}>QPS</Typography>
           <CardContent>
-            <ClusterSummary cluster={cluster} />
-            <QPSChart metrics={metrics} metricName="tidb_server_query_totals" />
-            <ConnectionsChart
-              metrics={metrics}
-              metricName="tidb_server_connections"
-            />
             <QPSLineChart
               metrics={metrics}
               metricName="tidb_server_query_totals"
             />
+          </CardContent>
+        </Card>
+
+        <Card className={classes.card}>
+          <Typography {...titleCls}>Connection Count</Typography>
+          <CardContent>
             <ConnLineChart
               metrics={metrics}
               metricName="tidb_server_connections"
@@ -127,7 +131,7 @@ class Overview extends React.Component {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={classes.card}>
           <Typography {...titleCls}>Stores Storage</Typography>
           <CardContent>
             Storage Capacity: {sumCapacity}{' '}
@@ -139,7 +143,7 @@ class Overview extends React.Component {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={classes.card}>
           <Typography {...titleCls}>Stores Status</Typography>
           <CardContent>
             <ul>
@@ -201,16 +205,13 @@ class Overview extends React.Component {
 
 function mapStateToProps(state) {
   const {
-    pdServers: { cluster, stores, metrics },
+    pdServers: { stores, metrics },
     globalUI: { theme },
   } = state
 
   return {
     theme,
-    cluster,
     metrics,
-    // qpsMetric: metrics.tidb_server_query_totals,
-    // connMetric: metrics.tidb_server_connections,
     stores: stores.list,
   }
 }

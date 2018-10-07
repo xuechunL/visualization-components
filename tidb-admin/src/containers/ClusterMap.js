@@ -2,11 +2,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import _ from 'lodash'
+// import _ from 'lodash'
 
 import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+// import Card from '@material-ui/core/Card'
+// import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
 import { PDList, StoreList, TiDBList } from '../components/clustermap'
@@ -14,11 +14,12 @@ import { PDList, StoreList, TiDBList } from '../components/clustermap'
 import { theme } from '../actions'
 
 const styles = {
-  summary: {
-    marginBottom: '30px',
+  gridList: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   card: {
-    maxWidth: 320,
+    width: 320,
     margin: 10,
   },
   cardTitle: {
@@ -52,7 +53,7 @@ class ClusterMap extends React.Component {
   }
 
   render() {
-    const { stores, members, tidbServers, theme, classes } = this.props
+    const { stores, members, tidbServers, classes } = this.props
 
     const titleCls = {
       variant: 'headline',
@@ -61,35 +62,19 @@ class ClusterMap extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
-        <Card className={classes.summary}>
-          <Typography {...titleCls}>Cluster Map</Typography>
-          <CardContent>
-            <p>Admin Theme: {_.upperCase(theme)}</p>
-            <p>Lorem ipsum sic dolor amet...</p>
-          </CardContent>
-        </Card>
-
-        <Card>
+      <div>
+        <div className={classes.section}>
           <Typography {...titleCls}>TiDB Servers</Typography>
-          <CardContent>
-            <TiDBList servers={tidbServers} classes={classes} />
-          </CardContent>
-        </Card>
-
-        <Card>
+          <TiDBList servers={tidbServers} classes={classes} />
+        </div>
+        <div className={classes.section}>
           <Typography {...titleCls}>PD Servers</Typography>
-          <CardContent>
-            <PDList members={members} classes={classes} />
-          </CardContent>
-        </Card>
-
-        <Card>
+          <PDList members={members} classes={classes} />
+        </div>
+        <div className={classes.section}>
           <Typography {...titleCls}>TiKV Servers</Typography>
-          <CardContent>
-            <StoreList stores={stores} classes={classes} />
-          </CardContent>
-        </Card>
+          <StoreList stores={stores} classes={classes} />
+        </div>
       </div>
     )
   }

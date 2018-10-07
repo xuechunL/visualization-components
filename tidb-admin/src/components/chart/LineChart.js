@@ -53,8 +53,8 @@ class LineChart extends React.Component {
 
   render() {
     const {
-      width = 600,
-      height = 300,
+      width = 300,
+      height = 150,
       theme = 'typpeA',
       metric = [],
     } = this.props
